@@ -1,42 +1,117 @@
-name: CI
+--
+layout: post
+categories: jekyll update
+title:  "MIDTERM EXAM: Hands-On"
+---
 
-on: workflow_dispatch
+![104281202-16681d80-54e8-11eb-9078-1ef278217c83](https://user-images.githubusercontent.com/75325962/104575255-ea889b80-5691-11eb-9cff-aff07244d103.png)
 
-jobs:
+## PROCEDURE
 
-  build:
+1. Fork this repository [https://github.com/ajcanlas-tip/sysad2-12021.git](https://github.com/ajcanlas-tip/sysad2-12021.git)
 
-    runs-on: windows-latest
+2. Clone your new repository in your VM *https://github.com/< your username >/sysad2-12021.git*
 
-    timeout-minutes: 9999
+3. Create a branch named "midterm-exam" and checkout in that branch.
 
-    steps:
+4. Create an Ansible playbook that does the following with an input of a config.yaml file and arranged Inventory file:
 
-    - name: Download Ngrok & NSSM
+	 4.1 Install and configure Elastic Stack in separate  hosts (Elastic Search, Kibana, Logstash)
 
-      run: |
-        Invoke-WebRequest https://github.com/avgchamara/WindowsRDP/raw/main/ngrok.exe -OutFile ngrok.exe
-        Invoke-WebRequest https://github.com/avgchamara/WindowsRDP/raw/main/nssm.exe -OutFile nssm.exe
-    - name: Copy NSSM & Ngrok to Windows Directory.
+	 4.2 Install Nagios in one host
 
-      run: | 
-        copy nssm.exe C:\Windows\System32
-        copy ngrok.exe C:\Windows\System32
-    - name: Connect your NGROK account
+	 4.3 Install Grafana,Prometheus and Influxdb in seperate hosts (Influxdb,Grafana,Prometheus)
 
-      run: .\ngrok.exe authtoken $Env:NGROK_AUTH_TOKEN
+	 4.4 Install Lamp Stack in seperate hosts (Httpd + Php,Mariadb)
 
-      env:
+5. push and commit your midterm-exam branch in the VM (no need for ansible.cfg upon pushing)
 
-        NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
+6. request a pull request from that branch in GitHub
 
-    - name: Download Important Files.
+7. For your midterm exam to be counted, please paste your repository link as an answer in this exam.
 
-      run: |
-        Invoke-WebRequest https://github.com/avgchamara/WindowsRDP/raw/main/NGROK-AP.bat -OutFile NGROK-AP.bat
-        Invoke-WebRequest https://github.com/avgchamara/WindowsRDP/raw/main/NGROK-CHECK.bat -OutFile NGROK-CHECK.bat
-        Invoke-WebRequest https://github.com/avgchamara/WindowsRDP/raw/main/loop.bat -OutFile loop.bat
-    - name: Make YML file for NGROK.
+
+### SUMMARIZATION PATH:
+
+Git branch link: [https://github.com/qjaaferrer/sysad2-12021/tree/midterm-exam](https://github.com/qjaaferrer/sysad2-12021/tree/midterm-exam)
+
+```
+.
+├── README.md
+├── config.yaml
+├── grafana.repo
+├── influxdb.repo
+├── inventory
+├── main.yaml
+└── roles
+    ├── elk_ubuntu
+    │   ├── README.md
+    │   ├── defaults
+    │   │   └── main.yml
+    │   ├── handlers
+    │   │   └── main.yml
+    │   ├── meta
+    │   │   └── main.yml
+    │   ├── tasks
+    │   │   └── main.yml
+    │   ├── tests
+    │   │   ├── inventory
+    │   │   └── test.yml
+    │   └── vars
+    │       └── main.yml
+    ├── grafana_host
+    │   ├── README.md
+    │   ├── defaults
+    │   │   └── main.yml
+    │   ├── handlers
+    │   │   └── main.yml
+    │   ├── meta
+    │   │   └── main.yml
+    │   ├── tasks
+    │   │   └── main.yml
+    │   ├── tests
+    │   │   ├── inventory
+    │   │   └── test.yml
+    │   └── vars
+    │       └── main.yml
+    ├── httpd_host
+    │   ├── README.md
+    │   ├── defaults
+    │   │   └── main.yml
+    │   ├── handlers
+    │   │   └── main.yml
+    │   ├── meta
+    │   │   └── main.yml
+    │   ├── tasks
+    │   │   └── main.yml
+    │   ├── tests
+    │   │   ├── inventory
+    │   │   └── test.yml
+    │   └── vars
+    │       └── main.yml
+    ├── influxdb_host
+    │   ├── README.md
+    │   ├── defaults
+    │   │   └── main.yml
+    │   ├── handlers
+    │   │   └── main.yml
+    │   ├── meta
+    │   │   └── main.yml
+    │   ├── tasks
+    │   │   └── main.yml
+    │   ├── tests
+    │   │   ├── inventory
+    │   │   └── test.yml
+    │   └── vars
+    │       └── main.yml
+    ├── kibana_host
+    │   ├── README.md
+    │   ├── defaults
+    │   └── vars
+    │       └── main.yml
+    ├── logstash_host
+    │   ├── README.md
+    │   ├── defaults
 
       run: start NGROK-AP.bat
 
